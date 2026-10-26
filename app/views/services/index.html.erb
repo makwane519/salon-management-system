@@ -1,0 +1,122 @@
+<div class="page-heading">
+  <div>
+    <h1>Our Services</h1>
+    <p>Manage your salon menu, pricing, and service durations.</p>
+  </div>
+
+  <%= link_to new_service_path, class: "btn" do %>
+    + Add New Service
+  <% end %>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-label">Total Services</div>
+    <div class="stat-value"><%= @services.count %></div>
+    <div class="stat-description">Services in your catalog</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Active Services</div>
+    <div class="stat-value"><%= @services.count { |service| service.active? } %></div>
+    <div class="stat-description">Currently available services</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Average Price</div>
+    <div class="stat-value">
+      ₹<%= number_with_precision(
+        @services.any? ? @services.sum(&:price).to_f / @services.count : 0,
+        precision: 0
+      ) %>
+    </div>
+    <div class="stat-description">Across all listed services</div>
+  </div>
+</div>
+
+<section class="panel">
+  <div class="panel-header">
+    <div>
+      <h2>Service Catalogue</h2>
+      <p>All services offered by your salon</p>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Price</th>
+          <th>Duration</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% if @services.any? %>
+          <% @services.each do |service| %>
+            <tr>
+              <td>
+                <span class="service-name"><%= service.name %></span>
+
+                <% if service.description.present? %>
+                  <span class="service-description">
+                    <%= service.description %>
+                  </span>
+                <% end %>
+              </td>
+
+              <td class="price">
+                <%= number_to_currency(
+                  service.price,
+                  unit: "₹",
+                  precision: 0
+                ) %>
+              </td>
+
+              <td><%= service.duration_minutes %> min</td>
+
+              <td>
+                <% if service.active? %>
+                  <span class="badge">Active</span>
+                <% else %>
+                  <span class="badge badge-inactive">Inactive</span>
+                <% end %>
+              </td>
+
+              <td>
+                <div class="actions">
+                  <%= link_to "View", service_path(service) %>
+                  <%= link_to "Edit", edit_service_path(service) %>
+
+                  <%= link_to "Delete",
+                      service_path(service),
+                      data: {
+                        turbo_method: :delete,
+                        turbo_confirm: "Are you sure you want to delete this service?"
+                      },
+                      class: "delete-link" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                <h3>No services added yet</h3>
+                <p>Start by adding your first salon service.</p>
+
+                <%= link_to "Add Your First Service",
+                    new_service_path,
+                    class: "btn" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>

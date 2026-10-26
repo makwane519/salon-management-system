@@ -1,0 +1,17 @@
+one:
+  name: Amit Kumar
+  role: Hair Stylist
+  phone: "9876543212"
+  email: amit@example.com
+  salary: 25000
+  joining_date: 2026-10-25
+  active: true
+
+two:
+  name: Neha Singh
+  role: Beautician
+  phone: "9876543213"
+  email: neha@example.com
+  salary: 30000
+  joining_date: 2026-10-25
+  active: true

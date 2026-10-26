@@ -1,0 +1,13 @@
+one:
+  name: Haircut
+  description: Standard haircut service
+  price: 300
+  duration_minutes: 30
+  active: true
+
+two:
+  name: Facial
+  description: Basic facial service
+  price: 800
+  duration_minutes: 45
+  active: true

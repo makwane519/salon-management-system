@@ -1,0 +1,99 @@
+<div class="page-heading">
+  <div>
+    <h1>Good evening!</h1>
+    <p>Welcome to your salon management dashboard.</p>
+  </div>
+
+  <%= link_to "+ Add Service", new_service_path, class: "btn" %>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-label">Total Services</div>
+    <div class="stat-value"><%= @total_services %></div>
+    <div class="stat-description">Services in your catalogue</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Active Services</div>
+    <div class="stat-value"><%= @active_services %></div>
+    <div class="stat-description">Currently available</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Average Service Price</div>
+    <div class="stat-value">
+      <%= number_to_currency(@average_price, unit: "₹", precision: 0) %>
+    </div>
+    <div class="stat-description">Across all services</div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="panel-header">
+    <div>
+      <h2>Recently Added Services</h2>
+      <p>Your latest salon offerings</p>
+    </div>
+
+    <%= link_to "View All →", services_path, class: "btn btn-secondary" %>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Service Name</th>
+          <th>Price</th>
+          <th>Duration</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% if @recent_services.any? %>
+          <% @recent_services.each do |service| %>
+            <tr>
+              <td>
+                <span class="service-name"><%= service.name %></span>
+              </td>
+
+              <td class="price">
+                <%= number_to_currency(service.price, unit: "₹", precision: 0) %>
+              </td>
+
+              <td><%= service.duration_minutes %> min</td>
+
+              <td>
+                <% if service.active? %>
+                  <span class="badge">Active</span>
+                <% else %>
+                  <span class="badge badge-inactive">Inactive</span>
+                <% end %>
+              </td>
+
+              <td>
+                <div class="actions">
+                  <%= link_to "View", service_path(service) %>
+                  <%= link_to "Edit", edit_service_path(service) %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                <h3>No services yet</h3>
+                <p>Add your first salon service to get started.</p>
+
+                <%= link_to "Add Service", new_service_path, class: "btn" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

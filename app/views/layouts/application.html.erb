@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Salon Studio | Management</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div class="app-shell">
+
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-icon">S</div>
+          <div>
+            <h2>Salon Studio</h2>
+            <span>MANAGEMENT</span>
+          </div>
+        </div>
+
+        <div class="nav-label">WORKSPACE</div>
+
+        <nav class="sidebar-nav">
+          <%= link_to root_path, class: "nav-item #{request.path == "/" ? "active" : ""}" do %>
+            <span class="nav-icon">⌂</span>
+            <span>Dashboard</span>
+          <% end %>
+
+          <%= link_to appointments_path,
+              class: "nav-item #{request.path.start_with?("/appointments") ? "active" : ""}" do %>
+            <span class="nav-icon">▦</span>
+            <span>Appointments</span>
+          <% end %>
+
+          <%= link_to customers_path,
+              class: "nav-item #{request.path.start_with?("/customers") ? "active" : ""}" do %>
+            <span class="nav-icon">♙</span>
+            <span>Customers</span>
+          <% end %>
+
+          <%= link_to services_path, class: "nav-item #{request.path.start_with?("/services") ? "active" : ""}" do %>
+            <span class="nav-icon">✂</span>
+            <span>Services</span>
+          <% end %>
+
+          <%= link_to staffs_path,
+              class: "nav-item #{request.path.start_with?("/staffs") ? "active" : ""}" do %>
+            <span class="nav-icon">♙</span>
+            <span>Staff</span>
+          <% end %>
+
+          <a href="#" class="nav-item">
+            <span class="nav-icon">₹</span>
+            <span>Payments</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="salon-profile">
+            <div class="profile-avatar">SS</div>
+            <div>
+              <strong>Salon Studio</strong>
+              <span>Administrator</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <span class="breadcrumb">Salon Studio / Management</span>
+            <p class="topbar-caption">Your salon, beautifully organized.</p>
+          </div>
+
+          <div class="topbar-right">
+            <span class="status-dot"></span>
+            <span class="online-label">Management Portal</span>
+            <div class="top-avatar">SS</div>
+          </div>
+        </header>
+
+        <div class="page-content">
+          <% if notice.present? %>
+            <div class="flash flash-notice"><%= notice %></div>
+          <% end %>
+
+          <% if alert.present? %>
+            <div class="flash flash-alert"><%= alert %></div>
+          <% end %>
+
+          <%= yield %>
+        </div>
+
+        <footer class="app-footer">
+          Salon Studio <span>·</span> Management Portal
+        </footer>
+      </main>
+
+    </div>
+  </body>
+</html>

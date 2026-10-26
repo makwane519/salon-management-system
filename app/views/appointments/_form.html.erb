@@ -1,0 +1,60 @@
+<%= form_with(model: appointment) do |form| %>
+
+  <% if appointment.errors.any? %>
+    <div class="flash">
+      <h3><%= pluralize(appointment.errors.count, "error") %> prevented this appointment from being saved:</h3>
+
+      <ul>
+        <% appointment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :customer_id, "Customer" %>
+    <%= form.collection_select :customer_id, Customer.order(:name), :id, :name,
+        { prompt: "Select customer" }, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :service_id, "Service" %>
+    <%= form.collection_select :service_id, Service.order(:name), :id, :name,
+        { prompt: "Select service" }, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :staff_id, "Staff Member" %>
+    <%= form.collection_select :staff_id, Staff.order(:name), :id, :name,
+        { prompt: "Select staff member" }, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :appointment_date %>
+    <%= form.date_field :appointment_date, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :appointment_time, "Appointment Time" %>
+    <%= form.time_field :appointment_time, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.select :status,
+        Appointment::STATUSES.map { |status| [status.titleize, status] },
+        { selected: form.object.status.presence || "pending" },
+        required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes, rows: 3 %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: "btn" %>
+  </div>
+
+<% end %>

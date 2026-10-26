@@ -1,0 +1,17 @@
+one:
+  customer: one
+  service: one
+  staff: one
+  appointment_date: <%= Date.current %>
+  appointment_time: "10:00"
+  status: pending
+  notes: First test appointment
+
+two:
+  customer: two
+  service: two
+  staff: two
+  appointment_date: <%= Date.current %>
+  appointment_time: "11:00"
+  status: confirmed
+  notes: Second test appointment
