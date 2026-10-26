@@ -7,46 +7,48 @@ class StaffsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit staffs_url
-    assert_selector "h1", text: "Staffs"
+    assert_selector "h1", text: "Our Team"
   end
 
   test "should create staff" do
     visit staffs_url
-    click_on "New staff"
+    click_on "Add Staff"
 
-    check "Active" if @staff.active
-    fill_in "Email", with: @staff.email
-    fill_in "Joining date", with: @staff.joining_date
-    fill_in "Name", with: @staff.name
-    fill_in "Phone", with: @staff.phone
-    fill_in "Role", with: @staff.role
-    fill_in "Salary", with: @staff.salary
+    fill_in "Name", with: "Test Staff"
+    fill_in "Role", with: "Hair Stylist"
+    fill_in "Phone", with: "9876501236"
+    fill_in "Email", with: "test.staff@example.com"
+    fill_in "Salary", with: 22000
+    fill_in "Joining date", with: Date.current.to_s
+    check "Active"
     click_on "Create Staff"
 
     assert_text "Staff was successfully created"
-    click_on "Back"
   end
 
-  test "should update Staff" do
+  test "should update staff" do
     visit staff_url(@staff)
-    click_on "Edit this staff", match: :first
+    click_on "Edit this staff"
 
-    check "Active" if @staff.active
-    fill_in "Email", with: @staff.email
-    fill_in "Joining date", with: @staff.joining_date
-    fill_in "Name", with: @staff.name
-    fill_in "Phone", with: @staff.phone
-    fill_in "Role", with: @staff.role
-    fill_in "Salary", with: @staff.salary
+    fill_in "Name", with: "Updated Staff"
     click_on "Update Staff"
 
     assert_text "Staff was successfully updated"
-    click_on "Back"
   end
 
-  test "should destroy Staff" do
-    visit staff_url(@staff)
-    click_on "Destroy this staff", match: :first
+  test "should destroy an unbooked staff member" do
+    staff = Staff.create!(
+      name: "Unbooked Test Staff",
+      role: "Beautician",
+      phone: "9876501237",
+      email: "unbooked.staff@example.com",
+      salary: 20000,
+      joining_date: Date.current,
+      active: true
+    )
+
+    visit staff_url(staff)
+    click_on "Destroy this staff"
 
     assert_text "Staff was successfully destroyed"
   end

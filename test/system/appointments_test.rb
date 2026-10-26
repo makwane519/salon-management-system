@@ -14,39 +14,31 @@ class AppointmentsTest < ApplicationSystemTestCase
     visit appointments_url
     click_on "New appointment"
 
-    fill_in "Appointment date", with: @appointment.appointment_date
-    fill_in "Appointment time", with: @appointment.appointment_time
-    fill_in "Customer", with: @appointment.customer_id
-    fill_in "Notes", with: @appointment.notes
-    fill_in "Service", with: @appointment.service_id
-    fill_in "Staff", with: @appointment.staff_id
-    fill_in "Status", with: @appointment.status
+    select @appointment.customer.name, from: "Customer"
+    select @appointment.service.name, from: "Service"
+    select @appointment.staff.name, from: "Staff Member"
+    fill_in "Appointment date", with: (Date.current + 1.day).to_s
+    fill_in "Appointment Time", with: "12:30"
+    select "Pending", from: "Status"
+    fill_in "Notes", with: "System test appointment"
     click_on "Create Appointment"
 
     assert_text "Appointment was successfully created"
-    click_on "Back"
   end
 
-  test "should update Appointment" do
+  test "should update appointment" do
     visit appointment_url(@appointment)
-    click_on "Edit this appointment", match: :first
+    click_on "Edit this appointment"
 
-    fill_in "Appointment date", with: @appointment.appointment_date
-    fill_in "Appointment time", with: @appointment.appointment_time
-    fill_in "Customer", with: @appointment.customer_id
-    fill_in "Notes", with: @appointment.notes
-    fill_in "Service", with: @appointment.service_id
-    fill_in "Staff", with: @appointment.staff_id
-    fill_in "Status", with: @appointment.status
+    fill_in "Appointment Time", with: "13:30"
     click_on "Update Appointment"
 
     assert_text "Appointment was successfully updated"
-    click_on "Back"
   end
 
-  test "should destroy Appointment" do
+  test "should destroy appointment" do
     visit appointment_url(@appointment)
-    click_on "Destroy this appointment", match: :first
+    click_on "Destroy this appointment"
 
     assert_text "Appointment was successfully destroyed"
   end
