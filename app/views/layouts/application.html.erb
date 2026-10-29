@@ -80,6 +80,13 @@
             <span class="status-dot"></span>
             <span class="online-label">Management Portal</span>
             <div class="top-avatar">SS</div>
+
+            <% if authenticated? %>
+              <%= button_to "Logout",
+                  session_path,
+                  method: :delete,
+                  class: "logout-button" %>
+            <% end %>
           </div>
         </header>
 

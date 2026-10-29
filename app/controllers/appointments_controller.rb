@@ -1,4 +1,6 @@
 class AppointmentsController < ApplicationController
+  before_action :authorize_admin_or_receptionist!, only: %i[index show new create edit update]
+  before_action :authorize_admin!, only: %i[destroy]
   before_action :set_appointment, only: %i[ show edit update destroy ]
 
   # GET /appointments or /appointments.json
